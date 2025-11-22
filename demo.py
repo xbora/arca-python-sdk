@@ -2,7 +2,7 @@
 Demo script for Arca Python SDK
 
 This script demonstrates the structure and usage of the Arca SDK.
-To use with a real API, replace the API_KEY variable with your actual key from https://arca.build/api-keys
+To use with a real API, replace the API_KEY variable with your actual key from https://arca.build
 """
 
 from arca import (
@@ -226,7 +226,7 @@ def main():
     demo_error_handling()
     
     print_section("Getting Started")
-    print("1. Get your API key from: https://arca.build/api-keys")
+    print("1. Get your API key from: https://arca.build")
     print("2. Install the SDK: pip install arca-ai-vault")
     print("3. Check out the examples/ directory for complete working examples")
     print("4. Read the full documentation at: https://docs.arca.build")
