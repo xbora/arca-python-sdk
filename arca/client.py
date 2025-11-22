@@ -496,3 +496,50 @@ class ArcaVectorClient:
             raise ArcaAPIError(error_message, response.status_code)
         
         return response.content
+
+
+def get_all_skills(user_id: str, base_url: str = "https://arca.build") -> Dict[str, Any]:
+    """
+    Get all skills (both table and vector) in one request
+    
+    This is a convenience function that fetches all skills from both
+    the Tables API and Vectors API in a single call. Useful for providing
+    complete context to AI assistants.
+    
+    Args:
+        user_id: Your Arca API key (WorkOS user ID)
+        base_url: Base URL for Arca API (default: https://arca.build)
+    
+    Returns:
+        Dictionary with 'tables' and 'vectors' arrays, each containing skills
+    
+    Example:
+        from arca import get_all_skills
+        
+        all_skills = get_all_skills(user_id="your-api-key")
+        print(f"Table skills: {len(all_skills['tables'])}")
+        print(f"Vector skills: {len(all_skills['vectors'])}")
+    """
+    if not user_id:
+        raise ArcaAuthError("user_id (API key) is required")
+    
+    url = f"{base_url.rstrip('/')}/api/v1/skills"
+    headers = {
+        "Authorization": f"Bearer {user_id}",
+        "Content-Type": "application/json"
+    }
+    
+    try:
+        response = requests.get(url, headers=headers)
+        
+        if response.status_code == 401:
+            raise ArcaAuthError("Invalid API key")
+        
+        if not response.ok:
+            error_data = response.json() if response.content else {}
+            error_message = error_data.get('error', f'Request failed with status {response.status_code}')
+            raise ArcaAPIError(error_message, response.status_code)
+        
+        return response.json()
+    except requests.RequestException as e:
+        raise ArcaAPIError(f"Network error: {str(e)}")
