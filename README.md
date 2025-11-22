@@ -122,6 +122,32 @@ results = client.search(
 tables = client.list_tables()
 ```
 
+### Combined Skills - Get All Skills at Once
+
+```python
+from arca import get_all_skills
+
+# Fetch all skills (both table and vector) in one API call
+all_skills = get_all_skills(user_id="your-api-key")
+
+# Returns:
+# {
+#   "tables": [
+#     {"tableName": "meals", "skill": {...}},
+#     {"tableName": "workouts", "skill": {...}}
+#   ],
+#   "vectors": [
+#     {"tableName": "notes", "skill": {...}},
+#     {"tableName": "documents", "skill": {...}}
+#   ]
+# }
+
+print(f"Found {len(all_skills['tables'])} table skills")
+print(f"Found {len(all_skills['vectors'])} vector skills")
+```
+
+This is especially useful for AI assistants that need complete context about all available data sources.
+
 ## API Reference
 
 ### ArcaTableClient
@@ -220,6 +246,25 @@ Get all vector skills in one request.
 
 #### `export(table_name)`
 Export a vector table as a CSV file (returns bytes).
+
+### get_all_skills()
+
+#### `get_all_skills(user_id: str, base_url: str = "https://arca.build")`
+Get all skills (both table and vector) in one request. This is a standalone function (not a client method).
+
+**Parameters:**
+- `user_id` (str): Your Arca API key
+- `base_url` (str): Base URL for Arca API (default: "https://arca.build")
+
+**Returns:**
+Dictionary with `tables` and `vectors` arrays, each containing skills.
+
+**Example:**
+```python
+from arca import get_all_skills
+
+all_skills = get_all_skills(user_id="your-api-key")
+```
 
 ## Data Models
 
