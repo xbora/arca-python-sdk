@@ -2,7 +2,7 @@
 Arca Python SDK - Private data vault for personal AI assistants
 """
 
-from .client import ArcaTableClient, ArcaVectorClient
+from .client import ArcaTableClient, ArcaVectorClient, get_all_skills
 from .models import (
     TableColumn,
     SkillMetadata,
@@ -15,6 +15,7 @@ from .version import __version__
 __all__ = [
     'ArcaTableClient',
     'ArcaVectorClient',
+    'get_all_skills',
     'TableColumn',
     'SkillMetadata',
     'VectorSkillMetadata',
