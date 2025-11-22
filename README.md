@@ -11,7 +11,7 @@ Arca provides two main APIs:
 ## Installation
 
 ```bash
-pip install arca-sdk
+pip install arca
 ```
 
 Or install from GitHub:
