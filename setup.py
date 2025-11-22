@@ -4,11 +4,13 @@ from pathlib import Path
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text(encoding='utf-8')
 
-exec(open('arca/version.py').read())
+version_dict = {}
+with open('arca/version.py') as f:
+    exec(f.read(), version_dict)
 
 setup(
     name="arca-sdk",
-    version=__version__,
+    version=version_dict['__version__'],
     author="Arca Team",
     author_email="support@arca.fyi",
     description="Python SDK for Arca - Private data vault for personal AI assistants",
