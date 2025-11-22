@@ -110,7 +110,7 @@ class ArcaTableClient:
         
         Args:
             table_name: Name of the table to query
-            query: Raw SQL WHERE clause
+            query: Raw SQL WHERE clause (e.g., "calories > 500", "protein > 20 AND carbs < 50")
             filters: Dictionary of filters (e.g., {"daysAgo": 7, "food": "Pizza"})
             limit: Maximum number of results
             offset: Number of results to skip
@@ -122,20 +122,39 @@ class ArcaTableClient:
         Returns:
             Dictionary with success status, data array, and metadata
         
-        Example:
+        Examples:
+            # Query with comparison operators
+            results = client.query(
+                table_name="meals",
+                query="calories > 500",
+                order_by="calories DESC"
+            )
+            
+            # Query with time-based filters
             results = client.query(
                 table_name="meals",
                 filters={"daysAgo": 7},
                 limit=10,
-                order_by="calories DESC"
+                order_by="created_at DESC"
+            )
+            
+            # Combine custom WHERE clause with other filters
+            results = client.query(
+                table_name="meals",
+                query="protein > 20",
+                filters={"daysAgo": 30},
+                limit=5
             )
         """
         payload: Dict[str, Any] = {"tableName": table_name}
         
-        if query:
-            payload["query"] = query
-        if filters:
-            payload["filters"] = filters
+        # Handle query parameter by mapping it to filters.customWhere
+        if query or filters:
+            filter_dict = filters.copy() if filters else {}
+            if query:
+                filter_dict["customWhere"] = query
+            payload["filters"] = filter_dict
+        
         if limit is not None:
             payload["limit"] = limit
         if offset is not None:
@@ -164,21 +183,38 @@ class ArcaTableClient:
         Args:
             table_name: Name of the table
             updates: Dictionary of column:value pairs to update
-            where: Raw SQL WHERE clause
+            where: Raw SQL WHERE clause (e.g., "calories > 1000", "food = 'Pizza'")
             filters: Dictionary of filters
         
         Returns:
             Dictionary with success status and rows affected
+        
+        Examples:
+            # Update with custom WHERE clause
+            result = client.update(
+                table_name="meals",
+                updates={"meal_type": "dinner"},
+                where="calories > 1000"
+            )
+            
+            # Update specific row
+            result = client.update(
+                table_name="meals",
+                updates={"calories": 170},
+                where="food = 'Grilled Chicken Breast'"
+            )
         """
         payload = {
             "tableName": table_name,
             "updates": updates
         }
         
-        if where:
-            payload["where"] = where
-        if filters:
-            payload["filters"] = filters
+        # Handle where parameter by mapping it to filters.customWhere
+        if where or filters:
+            filter_dict = filters.copy() if filters else {}
+            if where:
+                filter_dict["customWhere"] = where
+            payload["filters"] = filter_dict
         
         return self._make_request("POST", "/api/v1/tables/update", json=payload)
     
