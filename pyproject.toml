@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
-    {name = "Arca Team", email = "support@arca.fyi"}
+    {name = "Arca Team", email = "support@arca.build"}
 ]
 keywords = ["arca", "ai", "data", "vault", "storage", "vectors", "embeddings"]
 classifiers = [
@@ -38,6 +38,6 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://arca.fyi"
-Documentation = "https://docs.arca.fyi"
+Homepage = "https://arca.build"
+Documentation = "https://docs.arca.build"
 Repository = "https://github.com/xbora/arca-python-sdk"

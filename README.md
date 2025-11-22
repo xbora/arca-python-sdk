@@ -1,6 +1,6 @@
 # Arca Python SDK
 
-Python SDK for [Arca](https://arca.fyi) - A private data vault for personal AI assistants.
+Python SDK for [Arca](https://arca.build) - A private data vault for personal AI assistants.
 
 ## Overview
 
@@ -32,7 +32,7 @@ pip install -e .
 
 ### Authentication
 
-Get your API key from [https://arca.fyi/api-keys](https://arca.fyi/api-keys)
+Get your API key from [https://arca.build/api-keys](https://arca.build/api-keys)
 
 ```python
 from arca import ArcaTableClient, ArcaVectorClient
@@ -126,7 +126,7 @@ tables = client.list_tables()
 
 ### ArcaTableClient
 
-#### `__init__(user_id: str, base_url: str = "https://arca.fyi")`
+#### `__init__(user_id: str, base_url: str = "https://arca.build")`
 Initialize the table client with your API key.
 
 #### `upsert(table_name, data, columns=None, skill=None)`
@@ -178,7 +178,7 @@ Export a table as a Parquet file (returns bytes).
 
 ### ArcaVectorClient
 
-#### `__init__(user_id: str, base_url: str = "https://arca.fyi")`
+#### `__init__(user_id: str, base_url: str = "https://arca.build")`
 Initialize the vector client with your API key.
 
 #### `add(table_name, text, metadata=None, generate_embedding=True, embedding=None, skill=None)`
@@ -316,7 +316,7 @@ MIT License
 
 ## Links
 
-- [Documentation](https://docs.arca.fyi)
-- [API Reference](https://docs.arca.fyi/api)
+- [Documentation](https://docs.arca.build)
+- [API Reference](https://docs.arca.build/api)
 - [GitHub Repository](https://github.com/xbora/arca-python-sdk)
-- [Arca Homepage](https://arca.fyi)
+- [Arca Homepage](https://arca.build)

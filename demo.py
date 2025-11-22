@@ -2,7 +2,7 @@
 Demo script for Arca Python SDK
 
 This script demonstrates the structure and usage of the Arca SDK.
-To use with a real API, replace the API_KEY variable with your actual key from https://arca.fyi/api-keys
+To use with a real API, replace the API_KEY variable with your actual key from https://arca.build/api-keys
 """
 
 from arca import (
@@ -28,7 +28,7 @@ def demo_package_info():
     print_section("Arca Python SDK - Package Information")
     print(f"Version: {__version__}")
     print(f"Author: Arca Team")
-    print(f"Website: https://arca.fyi")
+    print(f"Website: https://arca.build")
     print(f"\nThis SDK provides access to:")
     print(f"  • Tables API - Store structured data (like SQL)")
     print(f"  • Vectors API - Store & search unstructured data semantically")
@@ -197,10 +197,10 @@ def main():
     demo_error_handling()
     
     print_section("Getting Started")
-    print("1. Get your API key from: https://arca.fyi/api-keys")
-    print("2. Install the SDK: pip install arca-sdk")
+    print("1. Get your API key from: https://arca.build/api-keys")
+    print("2. Install the SDK: pip install arca")
     print("3. Check out the examples/ directory for complete working examples")
-    print("4. Read the full documentation at: https://docs.arca.fyi")
+    print("4. Read the full documentation at: https://docs.arca.build")
     
     print("\n" + "="*60)
     print("  Demo completed successfully!")

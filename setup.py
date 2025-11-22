@@ -12,7 +12,7 @@ setup(
     name="arca",
     version=version_dict['__version__'],
     author="Arca Team",
-    author_email="support@arca.fyi",
+    author_email="support@arca.build",
     description="Python SDK for Arca - Private data vault for personal AI assistants",
     long_description=long_description,
     long_description_content_type="text/markdown",
