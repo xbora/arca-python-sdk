@@ -130,7 +130,7 @@ class ArcaTableClient:
                 order_by="calories DESC"
             )
         """
-        payload = {"tableName": table_name}
+        payload: Dict[str, Any] = {"tableName": table_name}
         
         if query:
             payload["query"] = query
@@ -263,7 +263,7 @@ class ArcaTableClient:
             Parquet file as bytes
         """
         url = f"{self.base_url}/api/v1/tables/export?tableName={table_name}"
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers, stream=True)
         
         if not response.ok:
             error_data = response.json() if response.content else {}
@@ -488,7 +488,7 @@ class ArcaVectorClient:
             CSV file as bytes
         """
         url = f"{self.base_url}/api/v1/vectors/export?tableName={table_name}"
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers, stream=True)
         
         if not response.ok:
             error_data = response.json() if response.content else {}
