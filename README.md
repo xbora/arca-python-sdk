@@ -173,7 +173,7 @@ Query a table with filters and aggregations.
 
 **Parameters:**
 - `table_name` (str): Name of the table to query
-- `query` (str, optional): Raw SQL WHERE clause
+- `query` (str, optional): Raw SQL WHERE clause for comparisons (e.g., `"calories > 500"`, `"protein > 20 AND carbs < 50"`)
 - `filters` (dict, optional): Dictionary of filters (e.g., `{"daysAgo": 7}`)
 - `limit` (int, optional): Maximum number of results
 - `offset` (int, optional): Number of results to skip
@@ -182,8 +182,49 @@ Query a table with filters and aggregations.
 - `group_by` (str, optional): Column to group by
 - `having` (str, optional): HAVING clause for aggregations
 
+**Examples:**
+```python
+# Query with comparison operators
+results = client.query(
+    table_name="meals",
+    query="calories > 500",
+    order_by="calories DESC"
+)
+
+# Query with time-based filters
+results = client.query(
+    table_name="meals",
+    filters={"daysAgo": 7},
+    limit=10
+)
+
+# Combine custom WHERE clause with other filters
+results = client.query(
+    table_name="meals",
+    query="protein > 20",
+    filters={"daysAgo": 30},
+    limit=5
+)
+```
+
 #### `update(table_name, updates, where=None, filters=None)`
 Update rows in a table.
+
+**Parameters:**
+- `table_name` (str): Name of the table
+- `updates` (dict): Dictionary of column:value pairs to update
+- `where` (str, optional): Raw SQL WHERE clause (e.g., `"calories > 1000"`)
+- `filters` (dict, optional): Dictionary of filters
+
+**Examples:**
+```python
+# Update with custom WHERE clause
+result = client.update(
+    table_name="meals",
+    updates={"meal_type": "dinner"},
+    where="calories > 1000"
+)
+```
 
 #### `delete(table_name)`
 Delete an entire table.
