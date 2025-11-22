@@ -11,7 +11,7 @@ Arca provides two main APIs:
 ## Installation
 
 ```bash
-pip install arca
+pip install arca-ai-vault
 ```
 
 Or install from GitHub:
