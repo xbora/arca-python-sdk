@@ -1,10 +1,10 @@
-# Query Filter Fix - Comparison Operators Now Work Correctly
+# Query and Update API Fixes - Now Matching Server API
 
 ## Summary
 
-Fixed a critical bug where SDK clients couldn't use comparison operators (`>`, `<`, `>=`, `<=`, `!=`, `LIKE`, etc.) in queries because the SDK wasn't properly formatting the request payload to match the server API expectations.
+Fixed critical bugs in both `query()` and `update()` methods where the SDK wasn't properly formatting request payloads to match the server API expectations.
 
-## The Problem
+## Problem 1: Query Filter Comparisons
 
 ### What Users Experienced
 When SDK users tried to filter data using comparison operators:
@@ -46,11 +46,11 @@ if filters:
     payload["filters"] = filters
 ```
 
-## The Solution
+### The Solution
 
-### Code Changes
+#### Code Changes
 
-**1. Fixed `query()` method:**
+**Fixed `query()` method:**
 ```python
 # NEW CODE (FIXED)
 if query or filters:
@@ -60,11 +60,59 @@ if query or filters:
     payload["filters"] = filter_dict
 ```
 
-**2. Fixed `update()` method:**
-Same fix applied to the `where` parameter in the `update()` method.
+## Problem 2: Update Method Parameter Mismatch
+
+### What Was Wrong
+
+The SDK's `update()` method was using incorrect field names:
+
+**Server API expects:**
+```json
+{
+  "tableName": "meals",
+  "where": {"id": 5},
+  "data": {"calories": 910, "meal_type": "dinner"}
+}
+```
+
+**SDK was sending:**
+```json
+{
+  "tableName": "meals",
+  "updates": {...},              // ❌ Wrong - should be "data"
+  "filters": {"customWhere": ...} // ❌ Wrong - should be "where" as dict
+}
+```
+
+### The Solution
+
+#### Code Changes
+
+**Fixed `update()` method:**
+```python
+# OLD SIGNATURE (BROKEN)
+def update(table_name, updates, where=None, filters=None):
+    payload = {
+        "tableName": table_name,
+        "updates": updates  # ❌ Wrong field
+    }
+    if where:
+        payload["filters"] = {"customWhere": where}  # ❌ Wrong structure
+
+# NEW SIGNATURE (FIXED)
+def update(table_name, data, where=None):
+    payload = {
+        "tableName": table_name,
+        "data": data  # ✓ Correct field name
+    }
+    if where:
+        payload["where"] = where  # ✓ Correct - dict for exact matches
+```
+
+**Breaking Change**: The `where` parameter changed from a string (SQL WHERE clause) to a dict (exact match conditions).
 
 ### Files Modified
-- `arca/client.py` - Fixed query and update methods
+- `arca/client.py` - Fixed query method (filters.customWhere) and update method (data/where params)
 - `README.md` - Updated documentation with comparison operator examples
 - `replit.md` - Documented the fix in project history
 
@@ -110,23 +158,36 @@ results = client.query(
 )
 ```
 
-### ✓ Update with Conditions
+### ✓ Update with Exact Match Conditions
 ```python
-# Update rows matching condition
+# Update specific row by ID
 result = client.update(
     table_name="meals",
-    updates={"meal_type": "dinner"},
-    where="calories > 1000"
+    data={"calories": 910, "meal_type": "dinner"},
+    where={"id": 5}
+)
+
+# Update by exact column match
+result = client.update(
+    table_name="meals",
+    data={"calories": 170},
+    where={"food": "Grilled Chicken Breast"}
 )
 ```
 
 ## Testing
 
-A comprehensive test suite was created and all tests pass:
+Comprehensive test suites were created and all tests pass:
+
+**Query Method Tests:**
 - ✓ Query parameter correctly maps to filters.customWhere
 - ✓ Query and filters merge properly
 - ✓ Filters work without query parameter
-- ✓ Update where parameter maps correctly
+
+**Update Method Tests:**
+- ✓ Update uses "data" field (not "updates")
+- ✓ Update uses "where" as dict (not "filters")
+- ✓ Payload matches server API exactly
 
 ## Server API Verification
 

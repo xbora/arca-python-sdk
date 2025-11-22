@@ -102,8 +102,8 @@ def update_and_delete_examples(api_key: str):
     print("\nUpdating meal calories...")
     result = client.update(
         table_name="meals",
-        updates={"calories": 170},
-        where="food = 'Grilled Chicken Breast'"
+        data={"calories": 170},
+        where={"food": "Grilled Chicken Breast"}
     )
     print(f"Update result: {result}")
     

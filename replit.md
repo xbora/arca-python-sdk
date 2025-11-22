@@ -11,22 +11,38 @@ The SDK is designed to be a Python equivalent of the TypeScript SDK, providing d
 
 ## Recent Changes
 
-### November 22, 2025 - Fixed Query Filter Comparison Operators
-**Issue**: SDK clients were unable to use comparison operators (`>`, `<`, `>=`, `<=`, etc.) in queries because the SDK was sending the `query` parameter incorrectly.
+### November 22, 2025 - Fixed Query and Update API Calls
 
-**Root Cause**: The SDK was mapping the `query` parameter to a top-level `"query"` field, but the Arca API expects comparison filters inside `filters.customWhere`.
+**Issue 1 - Query Filter Comparison Operators**: 
+SDK clients were unable to use comparison operators (`>`, `<`, `>=`, `<=`, etc.) in queries because the SDK was sending the `query` parameter incorrectly.
+
+**Fix**: Updated `ArcaTableClient.query()` to map the `query` parameter to `filters.customWhere` to match the server API.
+
+**Issue 2 - Update Method Parameter Mismatch**:
+The SDK's `update()` method was using incorrect parameter names (`updates` and `filters`) instead of what the server expects (`data` and `where`).
 
 **Fix Applied**:
-- Updated `ArcaTableClient.query()` to map the `query` parameter to `filters.customWhere`
-- Updated `ArcaTableClient.update()` to map the `where` parameter to `filters.customWhere`
-- Enhanced documentation with clear examples of comparison operators
-- Both methods now properly merge custom WHERE clauses with other filters
+- Changed `updates` parameter to `data` to match server API
+- Changed `where` parameter from string (SQL clause) to dict (exact matches like `{"id": 5}`)
+- Updated all examples and documentation
+- Removed `filters` parameter (not supported by update endpoint)
 
-**Impact**: Users can now successfully use queries like:
+**Impact**: 
 ```python
+# Query with comparison operators now works
 client.query(table_name="meals", query="calories > 500")
-client.update(table_name="meals", updates={...}, where="protein > 20")
+
+# Update now matches server API format
+client.update(
+    table_name="meals",
+    data={"calories": 910, "meal_type": "dinner"},
+    where={"id": 5}
+)
 ```
+
+**Breaking Change**: The `update()` method signature changed. Users need to:
+- Rename `updates=` to `data=`
+- Change `where=` from string to dict format
 
 ## User Preferences
 

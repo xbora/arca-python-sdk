@@ -173,48 +173,43 @@ class ArcaTableClient:
     def update(
         self,
         table_name: str,
-        updates: Dict[str, Any],
-        where: Optional[str] = None,
-        filters: Optional[Dict[str, Any]] = None
+        data: Dict[str, Any],
+        where: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
         Update rows in a table
         
         Args:
             table_name: Name of the table
-            updates: Dictionary of column:value pairs to update
-            where: Raw SQL WHERE clause (e.g., "calories > 1000", "food = 'Pizza'")
-            filters: Dictionary of filters
+            data: Dictionary of column:value pairs to update
+            where: Dictionary specifying which rows to update (e.g., {"id": 5})
+                   If omitted, updates all rows (use with caution!)
         
         Returns:
-            Dictionary with success status and rows affected
+            Dictionary with success status, rowsUpdated count, and updatedRow data
         
         Examples:
-            # Update with custom WHERE clause
+            # Update specific row by ID
             result = client.update(
                 table_name="meals",
-                updates={"meal_type": "dinner"},
-                where="calories > 1000"
+                data={"calories": 910, "meal_type": "dinner"},
+                where={"id": 5}
             )
             
-            # Update specific row
+            # Update row by exact column match
             result = client.update(
                 table_name="meals",
-                updates={"calories": 170},
-                where="food = 'Grilled Chicken Breast'"
+                data={"calories": 170},
+                where={"food": "Grilled Chicken Breast"}
             )
         """
         payload = {
             "tableName": table_name,
-            "updates": updates
+            "data": data
         }
         
-        # Handle where parameter by mapping it to filters.customWhere
-        if where or filters:
-            filter_dict = filters.copy() if filters else {}
-            if where:
-                filter_dict["customWhere"] = where
-            payload["filters"] = filter_dict
+        if where:
+            payload["where"] = where
         
         return self._make_request("POST", "/api/v1/tables/update", json=payload)
     
