@@ -132,18 +132,22 @@ all_skills = get_all_skills(user_id="your-api-key")
 
 # Returns:
 # {
-#   "tables": [
-#     {"tableName": "meals", "skill": {...}},
-#     {"tableName": "workouts", "skill": {...}}
+#   "success": true,
+#   "userId": "user_01...",
+#   "skills": [
+#     {"tableName": "favorites", "skill": "...", "type": "vector", "success": true},
+#     {"tableName": "meals", "skill": "...", "type": "table", "success": true}
 #   ],
-#   "vectors": [
-#     {"tableName": "notes", "skill": {...}},
-#     {"tableName": "documents", "skill": {...}}
-#   ]
+#   "tableSkillCount": 2,
+#   "vectorSkillCount": 1
 # }
 
-print(f"Found {len(all_skills['tables'])} table skills")
-print(f"Found {len(all_skills['vectors'])} vector skills")
+print(f"Total skills: {len(all_skills['skills'])}")
+print(f"Tables: {all_skills['tableSkillCount']}, Vectors: {all_skills['vectorSkillCount']}")
+
+# Filter by type if needed
+table_skills = [s for s in all_skills['skills'] if s['type'] == 'table']
+vector_skills = [s for s in all_skills['skills'] if s['type'] == 'vector']
 ```
 
 This is especially useful for AI assistants that need complete context about all available data sources.
@@ -257,13 +261,15 @@ Get all skills (both table and vector) in one request. This is a standalone func
 - `base_url` (str): Base URL for Arca API (default: "https://arca.build")
 
 **Returns:**
-Dictionary with `tables` and `vectors` arrays, each containing skills.
+Dictionary with `success`, `userId`, `skills` array (each skill has `tableName`, `skill`, `type`, `success`), `tableSkillCount`, and `vectorSkillCount`.
 
 **Example:**
 ```python
 from arca import get_all_skills
 
 all_skills = get_all_skills(user_id="your-api-key")
+# Access skills: all_skills['skills']
+# Each skill has: tableName, skill, type ('table' or 'vector'), success
 ```
 
 ## Data Models

@@ -511,14 +511,22 @@ def get_all_skills(user_id: str, base_url: str = "https://arca.build") -> Dict[s
         base_url: Base URL for Arca API (default: https://arca.build)
     
     Returns:
-        Dictionary with 'tables' and 'vectors' arrays, each containing skills
+        Dictionary with:
+        - success (bool): Request success status
+        - userId (str): User ID
+        - skills (list): Array of skills, each with tableName, skill, type, success
+        - tableSkillCount (int): Number of table skills
+        - vectorSkillCount (int): Number of vector skills
     
     Example:
         from arca import get_all_skills
         
         all_skills = get_all_skills(user_id="your-api-key")
-        print(f"Table skills: {len(all_skills['tables'])}")
-        print(f"Vector skills: {len(all_skills['vectors'])}")
+        print(f"Total: {len(all_skills['skills'])} skills")
+        print(f"Tables: {all_skills['tableSkillCount']}, Vectors: {all_skills['vectorSkillCount']}")
+        
+        # Filter by type
+        table_skills = [s for s in all_skills['skills'] if s['type'] == 'table']
     """
     if not user_id:
         raise ArcaAuthError("user_id (API key) is required")
