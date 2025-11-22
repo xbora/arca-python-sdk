@@ -9,6 +9,25 @@ The Arca Python SDK is a client library for interacting with Arca's data vault A
 
 The SDK is designed to be a Python equivalent of the TypeScript SDK, providing developers with a Pythonic interface to store personal AI assistant data privately and securely.
 
+## Recent Changes
+
+### November 22, 2025 - Fixed Query Filter Comparison Operators
+**Issue**: SDK clients were unable to use comparison operators (`>`, `<`, `>=`, `<=`, etc.) in queries because the SDK was sending the `query` parameter incorrectly.
+
+**Root Cause**: The SDK was mapping the `query` parameter to a top-level `"query"` field, but the Arca API expects comparison filters inside `filters.customWhere`.
+
+**Fix Applied**:
+- Updated `ArcaTableClient.query()` to map the `query` parameter to `filters.customWhere`
+- Updated `ArcaTableClient.update()` to map the `where` parameter to `filters.customWhere`
+- Enhanced documentation with clear examples of comparison operators
+- Both methods now properly merge custom WHERE clauses with other filters
+
+**Impact**: Users can now successfully use queries like:
+```python
+client.query(table_name="meals", query="calories > 500")
+client.update(table_name="meals", updates={...}, where="protein > 20")
+```
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
