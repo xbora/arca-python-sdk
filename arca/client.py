@@ -11,13 +11,13 @@ from .exceptions import ArcaAPIError, ArcaAuthError
 class ArcaTableClient:
     """Client for interacting with Arca Tables API"""
     
-    def __init__(self, user_id: str, base_url: str = "https://arca.fyi"):
+    def __init__(self, user_id: str, base_url: str = "https://arca.build"):
         """
         Initialize the Arca Table Client
         
         Args:
             user_id: Your Arca API key (WorkOS user ID)
-            base_url: Base URL for Arca API (default: https://arca.fyi)
+            base_url: Base URL for Arca API (default: https://arca.build)
         """
         if not user_id:
             raise ArcaAuthError("user_id (API key) is required")
@@ -276,13 +276,13 @@ class ArcaTableClient:
 class ArcaVectorClient:
     """Client for interacting with Arca Vectors API (semantic search)"""
     
-    def __init__(self, user_id: str, base_url: str = "https://arca.fyi"):
+    def __init__(self, user_id: str, base_url: str = "https://arca.build"):
         """
         Initialize the Arca Vector Client
         
         Args:
             user_id: Your Arca API key (WorkOS user ID)
-            base_url: Base URL for Arca API (default: https://arca.fyi)
+            base_url: Base URL for Arca API (default: https://arca.build)
         """
         if not user_id:
             raise ArcaAuthError("user_id (API key) is required")

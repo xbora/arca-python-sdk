@@ -30,7 +30,7 @@ Preferred communication style: Simple, everyday language.
 - Rationale: Matches existing API authentication patterns and provides consistent security model
 
 **Base URL Configuration**
-- Default base URL: `https://arca.fyi`
+- Default base URL: `https://arca.build`
 - Configurable via constructor parameter for testing/development environments
 - Rationale: Production-first defaults with flexibility for testing
 
@@ -101,7 +101,7 @@ Preferred communication style: Simple, everyday language.
 - **Alternative considered**: `httpx` for async support, but synchronous operations sufficient for current use case
 
 ### Arca API Backend
-- **Endpoint**: https://arca.fyi
+- **Endpoint**: https://arca.build
 - **Authentication**: Bearer token (WorkOS user IDs)
 - **Tables API**: DuckDB-backed SQL-like operations on Parquet files
 - **Vectors API**: Embedding generation and semantic search
