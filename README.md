@@ -14,10 +14,16 @@ Arca provides two main APIs:
 pip install arca-sdk
 ```
 
+Or install from GitHub:
+
+```bash
+pip install git+https://github.com/xbora/arca-python-sdk.git
+```
+
 Or install from source:
 
 ```bash
-git clone https://github.com/arca/arca-python-sdk.git
+git clone https://github.com/xbora/arca-python-sdk.git
 cd arca-python-sdk
 pip install -e .
 ```
@@ -312,5 +318,5 @@ MIT License
 
 - [Documentation](https://docs.arca.fyi)
 - [API Reference](https://docs.arca.fyi/api)
-- [GitHub Repository](https://github.com/arca/arca-python-sdk)
+- [GitHub Repository](https://github.com/xbora/arca-python-sdk)
 - [Arca Homepage](https://arca.fyi)

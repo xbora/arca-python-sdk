@@ -16,7 +16,7 @@ setup(
     description="Python SDK for Arca - Private data vault for personal AI assistants",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/arca/arca-python-sdk",
+    url="https://github.com/xbora/arca-python-sdk",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 4 - Beta",

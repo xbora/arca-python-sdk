@@ -40,4 +40,4 @@ dev = [
 [project.urls]
 Homepage = "https://arca.fyi"
 Documentation = "https://docs.arca.fyi"
-Repository = "https://github.com/arca/arca-python-sdk"
+Repository = "https://github.com/xbora/arca-python-sdk"
