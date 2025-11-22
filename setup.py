@@ -9,7 +9,7 @@ with open('arca/version.py') as f:
     exec(f.read(), version_dict)
 
 setup(
-    name="arca-sdk",
+    name="arca",
     version=version_dict['__version__'],
     author="Arca Team",
     author_email="support@arca.fyi",
