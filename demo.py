@@ -8,6 +8,7 @@ To use with a real API, replace the API_KEY variable with your actual key from h
 from arca import (
     ArcaTableClient,
     ArcaVectorClient,
+    get_all_skills,
     TableColumn,
     SkillMetadata,
     VectorSkillMetadata,
@@ -160,6 +161,31 @@ def demo_usage_example():
     print(')')
 
 
+def demo_get_all_skills():
+    """Demonstrate the combined get_all_skills function"""
+    print_section("Combined Skills Endpoint")
+    
+    print("The get_all_skills() function fetches both table and vector skills")
+    print("in a single API call - perfect for AI assistants!\n")
+    
+    print("Usage:")
+    print('from arca import get_all_skills\n')
+    print('all_skills = get_all_skills(user_id="your-api-key")\n')
+    print('# Returns:')
+    print('# {')
+    print('#   "tables": [')
+    print('#     {"tableName": "meals", "skill": {...}},')
+    print('#     {"tableName": "workouts", "skill": {...}}')
+    print('#   ],')
+    print('#   "vectors": [')
+    print('#     {"tableName": "notes", "skill": {...}},')
+    print('#     {"tableName": "documents", "skill": {...}}')
+    print('#   ]')
+    print('# }')
+    print('\nprint(f"Found {len(all_skills[\'tables\'])} table skills")')
+    print('print(f"Found {len(all_skills[\'vectors\'])} vector skills")')
+
+
 def demo_error_handling():
     """Demonstrate error handling"""
     print_section("Error Handling")
@@ -194,6 +220,7 @@ def main():
     demo_vector_client_structure()
     demo_data_models()
     demo_usage_example()
+    demo_get_all_skills()
     demo_error_handling()
     
     print_section("Getting Started")
