@@ -198,7 +198,7 @@ def main():
     
     print_section("Getting Started")
     print("1. Get your API key from: https://arca.build/api-keys")
-    print("2. Install the SDK: pip install arca")
+    print("2. Install the SDK: pip install arca-ai-vault")
     print("3. Check out the examples/ directory for complete working examples")
     print("4. Read the full documentation at: https://docs.arca.build")
     
