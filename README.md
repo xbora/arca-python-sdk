@@ -207,22 +207,28 @@ results = client.query(
 )
 ```
 
-#### `update(table_name, updates, where=None, filters=None)`
+#### `update(table_name, data, where=None)`
 Update rows in a table.
 
 **Parameters:**
 - `table_name` (str): Name of the table
-- `updates` (dict): Dictionary of column:value pairs to update
-- `where` (str, optional): Raw SQL WHERE clause (e.g., `"calories > 1000"`)
-- `filters` (dict, optional): Dictionary of filters
+- `data` (dict): Dictionary of column:value pairs to update
+- `where` (dict, optional): Dictionary specifying which rows to update (e.g., `{"id": 5}`)
 
 **Examples:**
 ```python
-# Update with custom WHERE clause
+# Update specific row by ID
 result = client.update(
     table_name="meals",
-    updates={"meal_type": "dinner"},
-    where="calories > 1000"
+    data={"calories": 910, "meal_type": "dinner"},
+    where={"id": 5}
+)
+
+# Update row by exact column match
+result = client.update(
+    table_name="meals",
+    data={"calories": 170},
+    where={"food": "Grilled Chicken Breast"}
 )
 ```
 
