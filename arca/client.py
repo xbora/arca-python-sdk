@@ -213,6 +213,52 @@ class ArcaTableClient:
         
         return self._make_request("POST", "/api/v1/tables/update", json=payload)
     
+    def alter_schema(
+        self,
+        table_name: str,
+        add_columns: List[TableColumn],
+        default_values: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        """
+        Alter table schema by adding new columns while preserving existing data
+        
+        Args:
+            table_name: Name of the table to alter
+            add_columns: List of TableColumn objects to add
+            default_values: Dictionary mapping column names to default values for existing rows
+        
+        Returns:
+            Dictionary with success status, message, tableName, changes, and newSchema
+        
+        Example:
+            client.alter_schema(
+                table_name="meals",
+                add_columns=[
+                    TableColumn("category", "VARCHAR"),
+                    TableColumn("rating", "INTEGER")
+                ],
+                default_values={
+                    "category": "General",
+                    "rating": 0
+                }
+            )
+        """
+        # Build the addColumns array with default values
+        columns_with_defaults = []
+        for col in add_columns:
+            col_dict = col.to_dict()
+            # Add defaultValue if provided
+            if default_values and col.name in default_values:
+                col_dict["defaultValue"] = default_values[col.name]
+            columns_with_defaults.append(col_dict)
+        
+        payload = {
+            "tableName": table_name,
+            "addColumns": columns_with_defaults
+        }
+        
+        return self._make_request("POST", "/api/v1/tables/alter-schema", json=payload)
+    
     def delete(self, table_name: str) -> Dict[str, Any]:
         """
         Delete an entire table
