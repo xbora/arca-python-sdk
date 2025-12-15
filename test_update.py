@@ -7,7 +7,7 @@ from arca import ArcaTableClient, TableColumn
 import os
 
 # Replace with your actual API key or use environment variable
-API_KEY = os.getenv("ARCA_API_KEY", "your-api-key-here")
+API_KEY = os.getenv("ARCA_API_KEY", "user_01K742WHQXDGP2540NFX4CBGVP")
 
 def test_update_function():
     """Test the SDK update function with correct parameters"""
