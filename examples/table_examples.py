@@ -149,7 +149,7 @@ def skill_management(api_key: str):
 
 
 if __name__ == "__main__":
-    # Replace with your actual API key from https://arca.build/api-keys
+    # Replace with your actual API key from https://arca.build
     API_KEY = "your-api-key-here"
     
     print("=== Arca Tables API Examples ===\n")
@@ -163,4 +163,4 @@ if __name__ == "__main__":
         print("\n=== All examples completed successfully! ===")
     except Exception as e:
         print(f"\nError: {e}")
-        print("\nNote: Make sure to replace 'your-api-key-here' with your actual API key from https://arca.build/api-keys")
+        print("\nNote: Make sure to replace 'your-api-key-here' with your actual API key from https://arca.build")

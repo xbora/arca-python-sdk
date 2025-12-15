@@ -32,7 +32,7 @@ pip install -e .
 
 ### Authentication
 
-Get your API key from [https://arca.build/api-keys](https://arca.build/api-keys)
+Get your API key from [https://arca.build](https://arca.build)
 
 ```python
 from arca import ArcaTableClient, ArcaVectorClient
