@@ -134,3 +134,4 @@ Thumbs.db
 *.parquet
 *.csv
 attached_assets/
+.pypirc
