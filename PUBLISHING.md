@@ -24,7 +24,7 @@ pip install build twine
 
 Edit `arca/version.py`:
 ```python
-__version__ = '0.1.1'  # Increment as needed
+__version__ = '0.2.1'  # Increment as needed
 ```
 
 ### 2. Build the Package
@@ -38,8 +38,8 @@ python -m build
 ```
 
 This creates two files in `dist/`:
-- `arca-0.1.0.tar.gz` (source distribution)
-- `arca-0.1.0-py3-none-any.whl` (wheel distribution)
+- `arca_ai_vault-0.2.1.tar.gz` (source distribution)
+- `arca_ai_vault-0.2.1-py3-none-any.whl` (wheel distribution)
 
 ### 3. Check the Package (Optional but Recommended)
 
@@ -62,7 +62,7 @@ When prompted:
 
 Then test installing from Test PyPI:
 ```bash
-pip install --index-url https://test.pypi.org/simple/ arca
+pip install --index-url https://test.pypi.org/simple/ arca-ai-vault
 ```
 
 ### 5. Upload to Production PyPI
@@ -82,7 +82,7 @@ When prompted:
 After a few minutes, anyone can install:
 
 ```bash
-pip install arca
+pip install arca-ai-vault
 ```
 
 ## Configuration File Method (Easier)
@@ -124,6 +124,6 @@ When you make changes:
 ## Version Numbering
 
 Follow [Semantic Versioning](https://semver.org/):
-- `0.1.0` → `0.1.1` (bug fixes)
-- `0.1.0` → `0.2.0` (new features, backward compatible)
-- `0.1.0` → `1.0.0` (major changes, may break compatibility)
+- `0.2.1` → `0.2.2` (bug fixes)
+- `0.2.1` → `0.3.0` (new features, backward compatible)
+- `0.2.1` → `1.0.0` (major changes, may break compatibility)
