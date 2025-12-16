@@ -76,6 +76,19 @@ results = client.query(
     limit=10
 )
 
+# Add new columns to existing table
+client.alter_schema(
+    table_name="meals",
+    add_columns=[
+        TableColumn("meal_type", "VARCHAR"),
+        TableColumn("rating", "INTEGER")
+    ],
+    default_values={
+        "meal_type": "snack",
+        "rating": 3
+    }
+)
+
 # List all tables
 tables = client.list_tables()
 
@@ -231,6 +244,45 @@ result = client.update(
     where={"food": "Grilled Chicken Breast"}
 )
 ```
+
+#### `alter_schema(table_name, add_columns, default_values=None)`
+Add new columns to an existing table while preserving all existing data.
+
+**Parameters:**
+- `table_name` (str): Name of the table to alter
+- `add_columns` (list[TableColumn]): List of new columns to add
+- `default_values` (dict, optional): Dictionary mapping column names to default values for existing rows
+
+**Returns:**
+Dictionary with success status, message, tableName, changes summary, and newSchema.
+
+**Examples:**
+```python
+# Add new columns with default values
+result = client.alter_schema(
+    table_name="meals",
+    add_columns=[
+        TableColumn("category", "VARCHAR"),
+        TableColumn("rating", "INTEGER"),
+        TableColumn("is_favorite", "BOOLEAN")
+    ],
+    default_values={
+        "category": "General",
+        "rating": 0,
+        "is_favorite": False
+    }
+)
+
+# Add nullable columns without defaults
+result = client.alter_schema(
+    table_name="meals",
+    add_columns=[
+        TableColumn("notes", "VARCHAR", nullable=True)
+    ]
+)
+```
+
+**Note:** This operation preserves all existing data and only adds new columns. You cannot remove or modify existing columns.
 
 #### `delete(table_name)`
 Delete an entire table.
