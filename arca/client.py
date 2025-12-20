@@ -41,8 +41,21 @@ class ArcaTableClient:
             
             if not response.ok:
                 error_data = response.json() if response.content else {}
+                
                 error_message = error_data.get('error', f'Request failed with status {response.status_code}')
-                raise ArcaAPIError(error_message, response.status_code)
+                details = error_data.get('details')
+                suggestion = error_data.get('suggestion')
+                technical_details = error_data.get('technicalDetails')
+                problematic_query = error_data.get('problematicQuery')
+                
+                raise ArcaAPIError(
+                    message=error_message,
+                    status_code=response.status_code,
+                    details=details,
+                    suggestion=suggestion,
+                    technical_details=technical_details,
+                    problematic_query=problematic_query
+                )
             
             return response.json()
         except requests.RequestException as e:
@@ -345,7 +358,19 @@ class ArcaTableClient:
         if not response.ok:
             error_data = response.json() if response.content else {}
             error_message = error_data.get('error', 'Export failed')
-            raise ArcaAPIError(error_message, response.status_code)
+            details = error_data.get('details')
+            suggestion = error_data.get('suggestion')
+            technical_details = error_data.get('technicalDetails')
+            problematic_query = error_data.get('problematicQuery')
+            
+            raise ArcaAPIError(
+                message=error_message,
+                status_code=response.status_code,
+                details=details,
+                suggestion=suggestion,
+                technical_details=technical_details,
+                problematic_query=problematic_query
+            )
         
         return response.content
 
@@ -383,8 +408,21 @@ class ArcaVectorClient:
             
             if not response.ok:
                 error_data = response.json() if response.content else {}
+                
                 error_message = error_data.get('error', f'Request failed with status {response.status_code}')
-                raise ArcaAPIError(error_message, response.status_code)
+                details = error_data.get('details')
+                suggestion = error_data.get('suggestion')
+                technical_details = error_data.get('technicalDetails')
+                problematic_query = error_data.get('problematicQuery')
+                
+                raise ArcaAPIError(
+                    message=error_message,
+                    status_code=response.status_code,
+                    details=details,
+                    suggestion=suggestion,
+                    technical_details=technical_details,
+                    problematic_query=problematic_query
+                )
             
             return response.json()
         except requests.RequestException as e:
@@ -570,7 +608,19 @@ class ArcaVectorClient:
         if not response.ok:
             error_data = response.json() if response.content else {}
             error_message = error_data.get('error', 'Export failed')
-            raise ArcaAPIError(error_message, response.status_code)
+            details = error_data.get('details')
+            suggestion = error_data.get('suggestion')
+            technical_details = error_data.get('technicalDetails')
+            problematic_query = error_data.get('problematicQuery')
+            
+            raise ArcaAPIError(
+                message=error_message,
+                status_code=response.status_code,
+                details=details,
+                suggestion=suggestion,
+                technical_details=technical_details,
+                problematic_query=problematic_query
+            )
         
         return response.content
 
@@ -623,7 +673,19 @@ def get_all_skills(user_id: str, base_url: str = "https://arca.build") -> Dict[s
         if not response.ok:
             error_data = response.json() if response.content else {}
             error_message = error_data.get('error', f'Request failed with status {response.status_code}')
-            raise ArcaAPIError(error_message, response.status_code)
+            details = error_data.get('details')
+            suggestion = error_data.get('suggestion')
+            technical_details = error_data.get('technicalDetails')
+            problematic_query = error_data.get('problematicQuery')
+            
+            raise ArcaAPIError(
+                message=error_message,
+                status_code=response.status_code,
+                details=details,
+                suggestion=suggestion,
+                technical_details=technical_details,
+                problematic_query=problematic_query
+            )
         
         return response.json()
     except requests.RequestException as e:
